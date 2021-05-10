@@ -20,7 +20,7 @@ exports.sourceNodes = async ({ actions }) => {
   // console.log(res)
 
   //loop members
-  for (const key in res.data.members.slice(0, 100)) {
+  for (const key in res.data.members.slice(0, 50)) {
     let member = res.data.members[key]
 
     //fetch eatch member profile
@@ -43,9 +43,7 @@ exports.sourceNodes = async ({ actions }) => {
     // console.log(resMedia.data.assets[0].value)
     // console.log("___")
     // console.log(member.character.name)
-    // console.log("___")
-
-
+    console.log("___" + key)
 
     const userNode = {
       id: `${key}`,
@@ -59,7 +57,7 @@ exports.sourceNodes = async ({ actions }) => {
       level: member.character.level,
       spec: resProfile.data.active_spec.name.en_US,
       ilvl: resProfile.data.equipped_item_level,
-      avatar: resMedia.data.assets[0].value
+      avatar: resMedia.data.assets[0].value,
     }
 
     const contentDigest = crypto
@@ -70,7 +68,7 @@ exports.sourceNodes = async ({ actions }) => {
 
     createNode(userNode)
 
-    await sleep(10)
+    await sleep(50)
   }
 
   // res.data.members.map(async (user, i) => {
