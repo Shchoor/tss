@@ -33,6 +33,15 @@ module.exports = {
       },
     },
     `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-plugin-remote-images`,
+      options: {
+        nodeType: 'allTssMember',
+        imagePath: 'avatar',
+        // OPTIONAL: Name you want to give new image field on the node.
+        // Defaults to 'localImage'.
+      },
+    },
     // {
     //   resolve: 'gatsby-source-rest-api',
     //   options: {
