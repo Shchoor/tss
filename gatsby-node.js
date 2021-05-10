@@ -36,7 +36,7 @@ exports.sourceNodes = async ({ actions }) => {
 
     const resMedia = await fetchUserMedia()
 
-    console.log(resMedia?.data?.assets[0]?.value)
+    // console.log(resMedia?.data?.assets[0]?.value)
 
 
     const userNode = {
