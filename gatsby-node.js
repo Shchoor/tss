@@ -20,58 +20,58 @@ exports.sourceNodes = async ({ actions }) => {
   console.log(res)
 
   //loop members
-  // for (const key in res.data.members.slice(0, 10)) {
-  //   let member = res.data.members[key]
+  for (const key in res.data.members.slice(0, 10)) {
+    let member = res.data.members[key]
 
-  //   //fetch eatch member profile
-  //   const fetchProfileByKey = () =>
-  //     axios.get(
-  //       `${member.character.key.href}&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
-  //     )
-  //   // await for results
-  //   const resProfile = await fetchProfileByKey()
+    // //fetch eatch member profile
+    // const fetchProfileByKey = () =>
+    //   axios.get(
+    //     `${member.character.key.href}&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
+    //   )
+    // // await for results
+    // const resProfile = await fetchProfileByKey()
 
-  //   const fetchUserMedia = () =>
-  //     axios.get(
-  //       `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=USdQZU9dlUCiuuhNTOacwWKiZkrONalA1T`
-  //     )
+    // const fetchUserMedia = () =>
+    //   axios.get(
+    //     `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=USdQZU9dlUCiuuhNTOacwWKiZkrONalA1T`
+    //   )
 
-  //   const resMedia = await fetchUserMedia()
+    // const resMedia = await fetchUserMedia()
 
-  //   console.log(resProfile.data.equipped_item_level)
-  //   console.log("___")
-  //   console.log(resMedia?.data?.assets[0]?.value)
-  //   console.log("___")
-  //   console.log(member?.character?.name)
-  //   console.log("___")
+    // console.log(resProfile.data.equipped_item_level)
+    // console.log("___")
+    // console.log(resMedia.data.assets[0].value)
+    // console.log("___")
+    console.log(member.character.name)
+    console.log("___")
 
 
 
-  //   const userNode = {
-  //     id: `${key}`,
-  //     parent: `__SOURCE__`,
-  //     internal: {
-  //       type: `TssMember`,
-  //     },
-  //     children: [],
-  //     // Other fields that you want to query with graphQl
-  //     name: member.character.name,
-  //     level: member.character.level,
-  //     spec: resProfile.data.active_spec?.name?.en_US,
-  //     ilvl: resProfile.data.equipped_item_level,
-  //     avatar: resMedia?.data?.assets[0]?.value
-  //   }
+    // const userNode = {
+    //   id: `${key}`,
+    //   parent: `__SOURCE__`,
+    //   internal: {
+    //     type: `TssMember`,
+    //   },
+    //   children: [],
+    //   // Other fields that you want to query with graphQl
+    //   name: member.character.name,
+    //   level: member.character.level,
+    //   spec: resProfile.data.active_spec.name.en_US,
+    //   ilvl: resProfile.data.equipped_item_level,
+    //   avatar: resMedia.data.assets[0].value
+    // }
 
-  //   const contentDigest = crypto
-  //     .createHash(`md5`)
-  //     .update(JSON.stringify(userNode))
-  //     .digest(`hex`)
-  //   userNode.internal.contentDigest = contentDigest
+    // const contentDigest = crypto
+    //   .createHash(`md5`)
+    //   .update(JSON.stringify(userNode))
+    //   .digest(`hex`)
+    // userNode.internal.contentDigest = contentDigest
 
-  //   createNode(userNode)
+    // createNode(userNode)
 
-  //   await sleep(10)
-  // }
+    await sleep(10)
+  }
 
   // res.data.members.map(async (user, i) => {
   //   const fetchUserKey = () =>
