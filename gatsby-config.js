@@ -33,5 +33,13 @@ module.exports = {
       },
     },
     `gatsby-plugin-sass`,
+    // {
+    //   resolve: 'gatsby-source-rest-api',
+    //   options: {
+    //     endpoints: [
+    //       'https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih'
+    //     ],
+    //   },
+    // },
   ],
 }
