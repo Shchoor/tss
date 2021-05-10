@@ -36,31 +36,37 @@ exports.sourceNodes = async ({ actions }) => {
 
     const resMedia = await fetchUserMedia()
 
-    // console.log(resMedia?.data?.assets[0]?.value)
+    console.log(resProfile.data.equipped_item_level)
+    console.log("___")
+    console.log(resMedia?.data?.assets[0]?.value)
+    console.log("___")
+    console.log(member?.character?.name)
+    console.log("___")
 
 
-    const userNode = {
-      id: `${key}`,
-      parent: `__SOURCE__`,
-      internal: {
-        type: `TssMember`,
-      },
-      children: [],
-      // Other fields that you want to query with graphQl
-      name: member.character.name,
-      level: member.character.level,
-      spec: resProfile.data.active_spec?.name?.en_US,
-      ilvl: resProfile.data.equipped_item_level,
-      avatar: resMedia?.data?.assets[0]?.value
-    }
 
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(userNode))
-      .digest(`hex`)
-    userNode.internal.contentDigest = contentDigest
+    // const userNode = {
+    //   id: `${key}`,
+    //   parent: `__SOURCE__`,
+    //   internal: {
+    //     type: `TssMember`,
+    //   },
+    //   children: [],
+    //   // Other fields that you want to query with graphQl
+    //   name: member.character.name,
+    //   level: member.character.level,
+    //   spec: resProfile.data.active_spec?.name?.en_US,
+    //   ilvl: resProfile.data.equipped_item_level,
+    //   avatar: resMedia?.data?.assets[0]?.value
+    // }
 
-    createNode(userNode)
+    // const contentDigest = crypto
+    //   .createHash(`md5`)
+    //   .update(JSON.stringify(userNode))
+    //   .digest(`hex`)
+    // userNode.internal.contentDigest = contentDigest
+
+    // createNode(userNode)
 
     await sleep(10)
   }
