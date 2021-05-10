@@ -51,24 +51,24 @@ const Cell = styled.div`
 `
 
 const Index = () => {
-  // const data = useStaticQuery(graphql`
-  //   query Member {
-  //     allTssMember {
-  //       nodes {
-  //         id
-  //         ilvl
-  //         name
-  //         spec
-  //         avatar
-  //       }
-  //     }
-  //   }
-  // `)
+  const data = useStaticQuery(graphql`
+    query Member {
+      allTssMember {
+        nodes {
+          id
+          ilvl
+          name
+          spec
+          avatar
+        }
+      }
+    }
+  `)
 
   return (
     <ContainerWrapper>
       <Row>
-        {/* <Col>
+        <Col>
           <Table>
             {data.allTssMember.nodes.length > 0
               ? data.allTssMember.nodes.map((v, i) => {
@@ -87,7 +87,7 @@ const Index = () => {
                 })
               : ""}
           </Table>
-        </Col> */}
+        </Col>
       </Row>
     </ContainerWrapper>
   )
