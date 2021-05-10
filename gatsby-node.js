@@ -45,28 +45,28 @@ exports.sourceNodes = async ({ actions }) => {
 
 
 
-    // const userNode = {
-    //   id: `${key}`,
-    //   parent: `__SOURCE__`,
-    //   internal: {
-    //     type: `TssMember`,
-    //   },
-    //   children: [],
-    //   // Other fields that you want to query with graphQl
-    //   name: member.character.name,
-    //   level: member.character.level,
-    //   spec: resProfile.data.active_spec?.name?.en_US,
-    //   ilvl: resProfile.data.equipped_item_level,
-    //   avatar: resMedia?.data?.assets[0]?.value
-    // }
+    const userNode = {
+      id: `${key}`,
+      parent: `__SOURCE__`,
+      internal: {
+        type: `TssMember`,
+      },
+      children: [],
+      // Other fields that you want to query with graphQl
+      name: member.character.name,
+      level: member.character.level,
+      spec: resProfile.data.active_spec?.name?.en_US,
+      ilvl: resProfile.data.equipped_item_level,
+      avatar: resMedia?.data?.assets[0]?.value
+    }
 
-    // const contentDigest = crypto
-    //   .createHash(`md5`)
-    //   .update(JSON.stringify(userNode))
-    //   .digest(`hex`)
-    // userNode.internal.contentDigest = contentDigest
+    const contentDigest = crypto
+      .createHash(`md5`)
+      .update(JSON.stringify(userNode))
+      .digest(`hex`)
+    userNode.internal.contentDigest = contentDigest
 
-    // createNode(userNode)
+    createNode(userNode)
 
     await sleep(10)
   }
