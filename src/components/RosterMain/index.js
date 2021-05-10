@@ -162,7 +162,7 @@ const Index = () => {
               onChange={handleInputChange}
             />
 
-            <button type="submit" value="Submit" className="search-btn">
+            <button value="Submit" className="search-btn">
               <span>Clear</span>
             </button>
           </Form>

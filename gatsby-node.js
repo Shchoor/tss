@@ -17,10 +17,10 @@ exports.sourceNodes = async ({ actions }) => {
   // await for results
   const res = await fetchRoster()
 
-  console.log(res)
+  // console.log(res)
 
   //loop members
-  for (const key in res.data.members.slice(0, 10)) {
+  for (const key in res.data.members.slice(0, 100)) {
     let member = res.data.members[key]
 
     //fetch eatch member profile

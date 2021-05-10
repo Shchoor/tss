@@ -36,7 +36,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-remote-images`,
       options: {
-        nodeType: 'allTssMember',
+        nodeType: 'TssMember',
         imagePath: 'avatar',
         // OPTIONAL: Name you want to give new image field on the node.
         // Defaults to 'localImage'.

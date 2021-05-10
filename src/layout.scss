@@ -204,6 +204,7 @@ body {
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
+  // line-height: 0;
   -moz-font-feature-settings: "kern", "liga", "clig", "calt";
   -ms-font-feature-settings: "kern", "liga", "clig", "calt";
   -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
@@ -384,7 +385,7 @@ p {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  margin-bottom: 1.45rem;
+  margin-bottom: 15px;
 }
 figure {
   margin-left: 0;
@@ -394,7 +395,7 @@ figure {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  margin-bottom: 1.45rem;
+  // margin-bottom: 1.45rem;
 }
 pre {
   margin-left: 0;
