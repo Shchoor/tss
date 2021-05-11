@@ -108,38 +108,38 @@ const ButtonWrapper = styled.div`
 `
 
 const Index = () => {
-  // const data = useStaticQuery(graphql`
-  //   query Member {
-  //     allTssMember {
-  //       nodes {
-  //         id
-  //         ilvl
-  //         name
-  //         spec
-  //         avatar
-  //         localImage {
-  //           childImageSharp {
-  //             gatsbyImageData(
-  //               width: 500
-  //               # placeholder: BLURRED
-  //             )
-  //           }
-  //         }
-  //       }
-  //     }
-  //     bg: file(relativePath: { eq: "background.png" }) {
-  //       childImageSharp {
-  //         gatsbyImageData(width: 690, placeholder: BLURRED)
-  //       }
-  //     }
-  //   }
-  // `)
+  const data = useStaticQuery(graphql`
+    query Member {
+      allTssMember {
+        nodes {
+          id
+          ilvl
+          name
+          spec
+          avatar
+          localImage {
+            childImageSharp {
+              gatsbyImageData(
+                width: 500
+                # placeholder: BLURRED
+              )
+            }
+          }
+        }
+      }
+      bg: file(relativePath: { eq: "background.png" }) {
+        childImageSharp {
+          gatsbyImageData(width: 690, placeholder: BLURRED)
+        }
+      }
+    }
+  `)
 
   return (
     <ContainerWrapper>
       <Row>
         <Col>
-          {/* <Table>
+          <Table>
             {data.allTssMember.nodes.length > 0
               ? data.allTssMember.nodes.map((v, i) => {
                   const image = getImage(v.localImage)
@@ -188,7 +188,7 @@ const Index = () => {
                   )
                 })
               : ""}
-          </Table> */}
+          </Table>
         </Col>
       </Row>
     </ContainerWrapper>
