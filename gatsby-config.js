@@ -38,8 +38,6 @@ module.exports = {
       options: {
         nodeType: 'TssMember',
         imagePath: 'avatar',
-        // OPTIONAL: Name you want to give new image field on the node.
-        // Defaults to 'localImage'.
       },
     },
     // {

@@ -11,7 +11,7 @@ exports.sourceNodes = async ({ actions }) => {
   // fetch TSS guild roster
   const fetchRoster = () =>
     axios.get(
-      `https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
+      `https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=USaaebR6P3OiMZmcJZN1IlBYJH6St1klfV`
     )
 
   // await for results
@@ -20,55 +20,71 @@ exports.sourceNodes = async ({ actions }) => {
   // console.log(res)
 
   //loop members
-  for (const key in res.data.members.slice(0, 50)) {
+  for (const key in res.data.members.slice(0, 150)) {
     let member = res.data.members[key]
 
-    //fetch eatch member profile
-    const fetchProfileByKey = () =>
-      axios.get(
-        `${member.character.key.href}&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
+    try {
+      const fetchProfileByKey = () =>
+        axios.get(
+          `${member.character.key.href}&access_token=USaaebR6P3OiMZmcJZN1IlBYJH6St1klfV`
+        )
+      // await for results
+      const resProfile = await fetchProfileByKey()
+      console.log(
+        "_________________________________________________________________________________________________________________" +
+          key
       )
-    // await for results
-    const resProfile = await fetchProfileByKey()
+      console.log(member.character.name)
 
-    const fetchUserMedia = () =>
-      axios.get(
-        `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=USdQZU9dlUCiuuhNTOacwWKiZkrONalA1T`
-      )
+      // fetch eatch member profile
+      const fetchUserMedia = () =>
+        axios.get(
+          `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=USdQZU9dlUCiuuhNTOacwWKiZkrONalA1T`
+        )
 
-    const resMedia = await fetchUserMedia()
+      const resMedia = await fetchUserMedia()
 
-    // console.log(resProfile.data.equipped_item_level)
+      const userNode = {
+        id: `${key}`,
+        parent: `__SOURCE__`,
+        internal: {
+          type: `TssMember`,
+        },
+        children: [],
+        // Other fields that you want to query with graphQl
+        name: member.character.name,
+        level: member.character.level,
+        spec: resProfile.data.active_spec.name.en_US,
+        ilvl: resProfile.data.equipped_item_level,
+        avatar: resMedia.data.assets[0].value,
+      }
+
+      const contentDigest = crypto
+        .createHash(`md5`)
+        .update(JSON.stringify(userNode))
+        .digest(`hex`)
+      userNode.internal.contentDigest = contentDigest
+
+      createNode(userNode)
+    } catch (error) {
+      console.log(error)
+    }
+
+    // fetch eatch member profile
+    // const fetchUserMedia = () =>
+    //   axios.get(
+    //     `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=USdQZU9dlUCiuuhNTOacwWKiZkrONalA1T`
+    //   )
+
+    // const resMedia = await fetchUserMedia()
+
     // console.log("___")
     // console.log(resMedia.data.assets[0].value)
     // console.log("___")
     // console.log(member.character.name)
-    console.log("___" + key)
+    // console.log(resProfile ? resProfile : "error occured with this profile")
 
-    const userNode = {
-      id: `${key}`,
-      parent: `__SOURCE__`,
-      internal: {
-        type: `TssMember`,
-      },
-      children: [],
-      // Other fields that you want to query with graphQl
-      name: member.character.name,
-      level: member.character.level,
-      spec: resProfile.data.active_spec.name.en_US,
-      ilvl: resProfile.data.equipped_item_level,
-      avatar: resMedia.data.assets[0].value,
-    }
-
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(userNode))
-      .digest(`hex`)
-    userNode.internal.contentDigest = contentDigest
-
-    createNode(userNode)
-
-    await sleep(50)
+    await sleep(100)
   }
 
   // res.data.members.map(async (user, i) => {

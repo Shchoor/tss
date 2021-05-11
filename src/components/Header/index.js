@@ -43,8 +43,6 @@ const Header = () => {
 
   const image = getImage(data.logo)
 
-  console.log(image)
-
   return (
     <Wrapper>
       <ContainerWrapper>
