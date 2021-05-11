@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { Container, Row, Col } from "react-bootstrap"
-import { StaticImage, GatsbyImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { useStaticQuery, graphql } from "gatsby"
 
 const ContainerWrapper = styled(Container)`
@@ -32,10 +32,7 @@ const Header = () => {
     query {
       logo: file(relativePath: { eq: "tss_logo.png" }) {
         childImageSharp {
-          gatsbyImageData(
-            width: 200
-            placeholder: BLURRED
-          )
+          gatsbyImageData(width: 200, placeholder: BLURRED)
         }
       }
     }

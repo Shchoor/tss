@@ -20,7 +20,7 @@ exports.sourceNodes = async ({ actions }) => {
   // console.log(res)
 
   //loop members
-  for (const key in res.data.members.slice(0, 150)) {
+  for (const key in res.data.members.slice(0, 40)) {
     let member = res.data.members[key]
 
     try {
@@ -56,6 +56,9 @@ exports.sourceNodes = async ({ actions }) => {
         level: member.character.level,
         spec: resProfile.data.active_spec.name.en_US,
         ilvl: resProfile.data.equipped_item_level,
+        classId: resProfile.data.character_class.id,
+        specId: resProfile.data.active_spec.id,
+        covenantId: resProfile.data.covenant_progress.chosen_covenant.id,
         avatar: resMedia.data.assets[0].value,
       }
 

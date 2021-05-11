@@ -3,6 +3,8 @@ import { useStaticQuery, graphql } from "gatsby"
 import styled from "styled-components"
 import { Container, Row, Col } from "react-bootstrap"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import ClassImage from "../ClassImage"
+import SpecImage from "../SpecImage"
 
 const ContainerWrapper = styled(Container)`
   max-width: 890px;
@@ -25,8 +27,14 @@ const ListItem = styled.li`
 `
 const Cell = styled.div`
   h5 {
-    margin-bottom: 0px;
+    margin-bottom: 10px;
   }
+
+  h6 {
+    margin-bottom: 10px;
+    color: #f8b700;
+  }
+
   p {
     margin-bottom: 0;
   }
@@ -107,6 +115,19 @@ const ButtonWrapper = styled.div`
   }
 `
 
+const ClassSpec = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  > div {
+    margin-right: 5px;
+  }
+`
+const Ilvl = styled.div`
+  font-size: 10px;
+`
+
 const Index = () => {
   const data = useStaticQuery(graphql`
     query Member {
@@ -117,6 +138,8 @@ const Index = () => {
           name
           spec
           avatar
+          specId
+          classId
           localImage {
             childImageSharp {
               gatsbyImageData(
@@ -153,6 +176,7 @@ const Index = () => {
                         //   fit: "cover",
                         //   cropFocus: "attention",
                         // }}
+                        alt="bg"
                       />
 
                       <CellImg>
@@ -161,8 +185,16 @@ const Index = () => {
                       <CellLeft>
                         <div>
                           <h5>{v.name}</h5>
-                          <p>ilvl: {v.ilvl}</p>
-                          <p>spec: {v.spec}</p>
+                          <h6>[note]</h6>
+                          {/* <p>spec: {v.spec}</p> */}
+                          <ClassSpec>
+                            <ClassImage
+                              style="margin-right:5px;"
+                              src={`class/${v.classId}_class.png`}
+                            />
+                            <SpecImage src={`spec/${v.specId}.jpg`} />
+                            <Ilvl>Item level: {v.ilvl}</Ilvl>
+                          </ClassSpec>
                         </div>
                       </CellLeft>
 
