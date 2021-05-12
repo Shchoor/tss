@@ -1,269 +1,109 @@
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
+import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import styled from "styled-components"
 import { Container, Row, Col } from "react-bootstrap"
-import * as JsSearch from "js-search"
+import { getImage } from "gatsby-plugin-image"
+import ListItem from "./listItem"
+import InfiniteScroll from "react-infinite-scroll-component"
 
 const ContainerWrapper = styled(Container)`
-  max-width: 1100px;
+  max-width: 890px;
   padding-top: 30px;
   padding-bottom: 50px;
 `
 const Table = styled.div`
-  border-radius: 0.25rem;
   padding: 0;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 8px;
   color: #212529;
 `
 
-const ListItem = styled.li`
-  display: flex;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.01);
-
-  &:last-child {
-    border-bottom-width: 0;
-  }
-`
-const Cell = styled.div`
-  width: 20%;
-  font-size: 14px;
-  border-right: 1px solid rgba(0, 0, 0, 0.125);
-  padding: 1rem 5px;
-
-  &:last-child {
-    border-right-width: 0;
-  }
-
-  &:nth-child(1) {
-    width: 30%;
-  }
-  &:nth-child(3) {
-    width: 10%;
-  }
-
-  @media (max-width: 767px) {
-    font-size: 10px;
-  }
-`
-const Link = styled.a`
-  text-decoration: none;
-  color: rgba(30, 109, 227, 1);
-`
-
-const Form = styled.form`
-  input {
-    width: 90%;
-  }
-  button {
-    width: 10%;
-  }
-`
-
-const removeNode = list => {
-  let result = []
-
-  list.forEach(item => {
-    result.push({
-      id: item.node.id,
-      name: item.node.name,
-      note: item.node.note,
-      level: item.node.level,
-      Class: item.node.Class,
-      rank: item.node.rank,
-    })
-  })
-
-  return result
-}
-
 const Index = () => {
   const data = useStaticQuery(graphql`
-    query notesQuery {
-      allNotesJson {
-        edges {
-          node {
-            id
-            name
-            level
-            note
-            rank
-            Class
+    query Member {
+      allTssMember {
+        nodes {
+          id
+          ilvl
+          name
+          spec
+          avatar
+          specId
+          classId
+          note
+          rank
+          lastUpdated
+          localImage {
+            childImageSharp {
+              gatsbyImageData(
+                width: 500
+                # placeholder: BLURRED
+              )
+            }
           }
+        }
+      }
+      bg: file(relativePath: { eq: "background.png" }) {
+        childImageSharp {
+          gatsbyImageData(width: 690, placeholder: BLURRED)
         }
       }
     }
   `)
 
-  const rosterList = removeNode(data.allNotesJson.edges)
-  const [isLoading, setIsLoading] = useState(true)
-  const [search, setSearch] = useState([])
-  const [searchResults, setSearchResults] = useState([])
-  const [isError, setIsError] = useState(false)
-  const [value, setValue] = useState("")
+  const showPerLoad = 50
+  const profiles = data.allTssMember.nodes.sort((a, b) => a.rank - b.rank)
 
-  // const wtf = getAllIngridients(products)
+  const [hasMore, setHasMore] = useState(true)
+  const [items, setItems] = useState(profiles.slice(0, showPerLoad))
+  const [shown, setShown] = useState(showPerLoad)
 
-  // console.log(wtf)
-
-  useEffect(() => {
-    if (rosterList.length) {
-      rebuildIndex()
-    } else {
-      setIsError(true)
-      console.log("error with rebuild index")
+  const fetchMoreData = () => {
+    if (items.length >= profiles.length) {
+      setHasMore(false)
+      return
     }
-  }, [])
-
-  useEffect(() => {
-    if (!isLoading) {
-      const queryResult = search.search(value)
-      setSearchResults(queryResult)
-      // console.log(queryResult)
-    }
-  }, [isLoading, value])
-
-  const rebuildIndex = () => {
-    const dataToSearch = new JsSearch.Search("id")
-
-    dataToSearch.indexStrategy = new JsSearch.AllSubstringsIndexStrategy()
-    dataToSearch.sanitizer = new JsSearch.LowerCaseSanitizer()
-    dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex("id")
-    dataToSearch.addIndex("name")
-    dataToSearch.addIndex("note")
-
-    dataToSearch.addDocuments(rosterList)
-    setSearch(dataToSearch)
-    setIsLoading(false)
+    setItems(items.concat(profiles.slice(shown, shown + showPerLoad)))
+    setShown(shown + showPerLoad)
   }
 
-  const handleInputChange = event => {
-    const query = event.target.value
-    setValue(query)
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-    setValue("")
-  }
+  let lastUpdated = Date.parse(profiles[0].lastUpdated)
+  let dtime = new Date(lastUpdated)
 
   return (
     <ContainerWrapper>
       <Row>
         <Col>
-          <Form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              aria-label="Search"
-              placeholder="Search"
-              value={value}
-              onChange={handleInputChange}
-            />
-
-            <button value="Submit" className="search-btn">
-              <span>Clear</span>
-            </button>
-          </Form>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
           <Table>
-            {searchResults.length > 0
-              ? searchResults.map((v, i) => {
-                  let numberOfCharacters = data.allNotesJson.edges.filter(
-                    nv => nv.node.note === v.note && nv.node.note !== ""
-                  ).length
+            {/* {data.allTssMember.nodes.slice(0, itemsToShow).map((v, i) => {
+              const image = getImage(v.localImage)
+              const imageBg = getImage(data.bg)
 
-                  return (
-                    <ListItem key={i}>
-                      <Cell>
-                        <b>{v.name.replace("-Ravencrest", "")} </b>
-                        {numberOfCharacters >= 2
-                          ? `(${numberOfCharacters})`
-                          : ""}
-                      </Cell>
-                      <Cell>{v.note}</Cell>
-                      <Cell>{v.level}</Cell>
-                      <Cell>{v.Class}</Cell>
-                      <Cell>
-                        <Link
-                          target="_blank"
-                          href={`https://check-pvp.fr/eu/Ravencrest/${v.name.replace(
-                            "-Ravencrest",
-                            ""
-                          )}`}
-                        >
-                          CheckPvP
-                        </Link>
-                      </Cell>
-                    </ListItem>
-                  )
-                })
-              : rosterList.map((v, i) => {
-                  let numberOfCharacters = data.allNotesJson.edges.filter(
-                    nv => nv.node.note === v.note && nv.node.note !== ""
-                  ).length
-                  return (
-                    <ListItem key={i}>
-                      <Cell>
-                        <b>{v.name.replace("-Ravencrest", "")} </b>
-                        {numberOfCharacters >= 2
-                          ? `(${numberOfCharacters})`
-                          : ""}
-                      </Cell>
-                      <Cell>{v.note}</Cell>
-                      <Cell>{v.level}</Cell>
-                      <Cell>{v.Class}</Cell>
-                      <Cell>
-                        <Link
-                          target="_blank"
-                          href={`https://check-pvp.fr/eu/Ravencrest/${v.name.replace(
-                            "-Ravencrest",
-                            ""
-                          )}`}
-                        >
-                          CheckPvP
-                        </Link>
-                      </Cell>
-                    </ListItem>
-                  )
-                })}
+              return <ListItem key={i} v={v} image={image} imageBg={imageBg} />
+            })} */}
+            <div>Last updated: {dtime.toLocaleString()}</div>
+            <div>Blizz Profiles successfully loaded: {profiles.length}</div>
+
+
+            <InfiniteScroll
+              dataLength={items.length}
+              next={fetchMoreData}
+              hasMore={hasMore}
+              loader={<h4>Loading...</h4>}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+            >
+              {items.map((v, i) => {
+                const image = getImage(v.localImage)
+                const imageBg = getImage(data.bg)
+
+                return (
+                  <ListItem key={i} v={v} image={image} imageBg={imageBg} />
+                )
+              })}
+            </InfiniteScroll>
           </Table>
-          {/* <Table>
-            {data.allNotesJson.edges.map(({ node }, i) => {
-              let numberOfCharacters = data.allNotesJson.edges.filter(
-                v => v.node.note === node.note && v.node.note !== ""
-              ).length
-
-              return (
-                <ListItem key={i}>
-                  <Cell>
-                    <b>
-                      {node.name.replace("-Ravencrest", "")}{" "}
-                      {numberOfCharacters >= 2 ? `(${numberOfCharacters})` : ""}
-                    </b>
-                  </Cell>
-                  <Cell>{node.note}</Cell>
-                  <Cell>{node.level}</Cell>
-                  <Cell>{node.class}</Cell>
-                  <Cell>
-                    <Link
-                      target="_blank"
-                      href={`https://check-pvp.fr/eu/Ravencrest/${node.name.replace(
-                        "-Ravencrest",
-                        ""
-                      )}`}
-                    >
-                      CheckPvP
-                    </Link>
-                  </Cell>
-                </ListItem>
-              )
-            })}
-          </Table> */}
         </Col>
       </Row>
     </ContainerWrapper>

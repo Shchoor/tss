@@ -1,48 +1,81 @@
 const axios = require("axios")
 const crypto = require("crypto")
+const fs = require("fs")
 
 function sleep(time) {
   return new Promise(resolve => setTimeout(resolve, time))
 }
 
+async function readFile(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, "utf8", function (err, data) {
+      if (err) {
+        reject(err)
+      }
+      resolve(data)
+    })
+  })
+}
+
+async function readStats(path) {
+  return new Promise((resolve, reject) => {
+    fs.stat(path, "utf8", function (err, stats) {
+      if (err) {
+        reject(err)
+      }
+      resolve(stats.mtime)
+    })
+  })
+}
+
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
+
+  let notesFromFile = await readFile("./src/data/notes.json")
+  let parsedJsonNotes = JSON.parse(notesFromFile)
+  let dictionary = Object.assign(
+    {},
+    ...parsedJsonNotes.map(x => ({
+      [x.name.replace("-Ravencrest", "")]: {
+        name: x.name,
+        note: x.note,
+      },
+    }))
+  )
+
+  let lastUpdated = await readStats("./src/data/notes.json")
 
   // fetch TSS guild roster
   const fetchRoster = () =>
     axios.get(
-      `https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=USaaebR6P3OiMZmcJZN1IlBYJH6St1klfV`
+      `https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
     )
-
-  // await for results
   const res = await fetchRoster()
 
-  // console.log(res)
-
   //loop members
-  for (const key in res.data.members.slice(0, 40)) {
+  for (const key in res.data.members) {
     let member = res.data.members[key]
 
     try {
       const fetchProfileByKey = () =>
         axios.get(
-          `${member.character.key.href}&access_token=USaaebR6P3OiMZmcJZN1IlBYJH6St1klfV`
+          `${member.character.key.href}&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
         )
-      // await for results
       const resProfile = await fetchProfileByKey()
       console.log(
         "_________________________________________________________________________________________________________________" +
           key
       )
-      console.log(member.character.name)
+      // console.log(member.character.name)
 
       // fetch eatch member profile
       const fetchUserMedia = () =>
         axios.get(
-          `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=USdQZU9dlUCiuuhNTOacwWKiZkrONalA1T`
+          `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=US8quFnSY4m3Zq5kq6vuaTU0Jyn58SNpma`
         )
-
       const resMedia = await fetchUserMedia()
+
+   
 
       const userNode = {
         id: `${key}`,
@@ -51,15 +84,17 @@ exports.sourceNodes = async ({ actions }) => {
           type: `TssMember`,
         },
         children: [],
-        // Other fields that you want to query with graphQl
         name: member.character.name,
         level: member.character.level,
+        rank: member.rank,
         spec: resProfile.data.active_spec.name.en_US,
         ilvl: resProfile.data.equipped_item_level,
         classId: resProfile.data.character_class.id,
         specId: resProfile.data.active_spec.id,
         covenantId: resProfile.data.covenant_progress.chosen_covenant.id,
         avatar: resMedia.data.assets[0].value,
+        note: dictionary[member.character.name].note,
+        lastUpdated: lastUpdated
       }
 
       const contentDigest = crypto
@@ -73,63 +108,8 @@ exports.sourceNodes = async ({ actions }) => {
       console.log(error)
     }
 
-    // fetch eatch member profile
-    // const fetchUserMedia = () =>
-    //   axios.get(
-    //     `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=USdQZU9dlUCiuuhNTOacwWKiZkrONalA1T`
-    //   )
-
-    // const resMedia = await fetchUserMedia()
-
-    // console.log("___")
-    // console.log(resMedia.data.assets[0].value)
-    // console.log("___")
-    // console.log(member.character.name)
-    // console.log(resProfile ? resProfile : "error occured with this profile")
-
     await sleep(100)
   }
-
-  // res.data.members.map(async (user, i) => {
-  //   const fetchUserKey = () =>
-  //     axios.get(
-  //       `${user.character.key.href}&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
-  //     )
-
-  //   // await for results
-  //   const resM = await fetchUserKey()
-
-  //   console.log(resM.data.name)
-
-  //   const userNode = {
-  //     id: `${i}`,
-  //     parent: `__SOURCE__`,
-  //     internal: {
-  //       type: `TssMember`,
-  //     },
-  //     children: [],
-  //     // Other fields that you want to query with graphQl
-  //     name: user.character.name,
-  //     level: user.character.level,
-  //     character: user.character,
-  //     charKeyApi: {
-  //       // name: resM.data.name,
-  //       spec: resM.data.active_spec.name.en_US,
-  //       ilvl: resM.data.equipped_item_level,
-  //     },
-  //   }
-
-  //   // Get content digest of node. (Required field)
-  //   const contentDigest = crypto
-  //     .createHash(`md5`)
-  //     .update(JSON.stringify(userNode))
-  //     .digest(`hex`)
-  //   // add it to userNode
-  //   userNode.internal.contentDigest = contentDigest
-
-  //   // Create node with the gatsby createNode() API
-  //   createNode(userNode)
-  // })
 
   return
 }

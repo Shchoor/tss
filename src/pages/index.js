@@ -1,5 +1,5 @@
 import React from "react"
-import MainHero from '../components/MainHero'
+import RosterMain from '../components/RosterMain'
 import Layout from "../layout"
 
 const Home = () => {
@@ -62,7 +62,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <MainHero />
+      <RosterMain />
     </Layout>
   )
 }

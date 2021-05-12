@@ -24,7 +24,7 @@ const ClassImage = ({ src }) => {
 
   const match = useMemo(
     () => data.allFile.edges.find(({ node }) => src === node.relativePath),
-    [(data, src)]
+    [data, src]
   )
 
   const image = getImage(match.node.childImageSharp)

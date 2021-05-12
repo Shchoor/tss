@@ -4,21 +4,9 @@ import { Container, Row, Col } from "react-bootstrap"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { useStaticQuery, graphql } from "gatsby"
 
-const ContainerWrapper = styled(Container)`
-  /* margin: 3rem auto;
-  max-width: 700px;
-  display: flex;
-  flex-direction: column; */
-  /* background-color: #161b22; */
-`
+const ContainerWrapper = styled(Container)``
 const Wrapper = styled.div`
-  /* margin: 3rem auto;
-  max-width: 700px;
-  display: flex;
-  flex-direction: column; */
   background-color: #161b22;
-  /* background-color: #f5f5f5; */
-  /* background-color: white; */
 `
 
 const Gimg = styled(GatsbyImage)`
@@ -45,12 +33,6 @@ const Header = () => {
       <ContainerWrapper>
         <Row>
           <Col>
-            {/* <GatsbyImage
-            //   className={styles.sezzleStepsImg}
-              fluid={data.file.childImageSharp.fluid}
-            //   imgStyle={{ objectFit: "contain" }}
-            /> */}
-
             <Gimg image={image} alt="Logo" />
           </Col>
         </Row>
