@@ -134,7 +134,6 @@ const LItem = ({ imageBg, image, v }) => {
               src={`class/${v.classId}_class.png`}
             />
             <SpecImage src={`spec/${v.specId}.jpg`} />
-            {console.log(v.specId)}
             <Ilvl>Item level: {v.ilvl}</Ilvl>
           </ClassSpec>
         </div>

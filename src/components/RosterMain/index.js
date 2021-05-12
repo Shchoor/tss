@@ -1,10 +1,10 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import styled from "styled-components"
 import { Container, Row, Col } from "react-bootstrap"
 import { getImage } from "gatsby-plugin-image"
 import ListItem from "./listItem"
-import InfiniteScroll from "react-infinite-scroll-component"
+import * as JsSearch from "js-search"
 
 const ContainerWrapper = styled(Container)`
   max-width: 890px;
@@ -14,6 +14,14 @@ const ContainerWrapper = styled(Container)`
 const Table = styled.div`
   padding: 0;
   color: #212529;
+`
+const Form = styled.form`
+  input {
+    width: 90%;
+  }
+  button {
+    width: 10%;
+  }
 `
 
 const Index = () => {
@@ -30,6 +38,7 @@ const Index = () => {
           classId
           note
           rank
+          level
           lastUpdated
           localImage {
             childImageSharp {
@@ -48,61 +57,135 @@ const Index = () => {
       }
     }
   `)
-
-  const showPerLoad = 50
   const profiles = data.allTssMember.nodes.sort((a, b) => a.rank - b.rank)
 
-  const [hasMore, setHasMore] = useState(true)
-  const [items, setItems] = useState(profiles.slice(0, showPerLoad))
-  const [shown, setShown] = useState(showPerLoad)
+  const [isLoading, setIsLoading] = useState(true)
+  const [search, setSearch] = useState([])
+  const [searchResults, setSearchResults] = useState([])
+  const [isError, setIsError] = useState(false)
+  const [value, setValue] = useState("")
 
-  const fetchMoreData = () => {
-    if (items.length >= profiles.length) {
-      setHasMore(false)
-      return
+  useEffect(() => {
+    if (profiles.length) {
+      rebuildIndex()
+    } else {
+      setIsError(true)
+      console.log("error with rebuild index")
     }
-    setItems(items.concat(profiles.slice(shown, shown + showPerLoad)))
-    setShown(shown + showPerLoad)
+  }, [])
+
+  useEffect(() => {
+    if (!isLoading) {
+      const queryResult = search.search(value)
+      setSearchResults(queryResult)
+      // console.log(queryResult)
+    }
+  }, [isLoading, value])
+
+  const rebuildIndex = () => {
+    const dataToSearch = new JsSearch.Search("id")
+
+    dataToSearch.indexStrategy = new JsSearch.PrefixIndexStrategy()
+    dataToSearch.sanitizer = new JsSearch.LowerCaseSanitizer()
+    dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex("id")
+    dataToSearch.addIndex("name")
+    dataToSearch.addIndex("note")
+
+    dataToSearch.addDocuments(profiles)
+    setSearch(dataToSearch)
+    setIsLoading(false)
   }
+
+  const handleInputChange = event => {
+    const query = event.target.value
+    setValue(query)
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+  }
+  const handleClear = event => {
+    setValue("")
+  }
+
+  // const [hasMore, setHasMore] = useState(true)
+  // const [items, setItems] = useState(searchResults.slice(0, showPerLoad))
+  // const [shown, setShown] = useState(showPerLoad)
+
+  // const fetchMoreData = () => {
+  //   if (items.length >= searchResults.length) {
+  //     setHasMore(false)
+  //     return
+  //   }
+  //   setItems(items.concat(searchResults.slice(shown, shown + showPerLoad)))
+  //   setShown(shown + showPerLoad)
+  // }
 
   let lastUpdated = Date.parse(profiles[0].lastUpdated)
   let dtime = new Date(lastUpdated)
+
+  const showByLoad = 50
+
+  const [limit, setLimit] = React.useState(showByLoad)
+
+  const handleLoad = (event, value) => {
+    setLimit(limit + showByLoad)
+  }
 
   return (
     <ContainerWrapper>
       <Row>
         <Col>
+          <div>Last updated: {dtime.toLocaleString()}</div>
+          <div>Blizz Profiles successfully loaded: {profiles.length}</div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              aria-label="Search"
+              placeholder="Search"
+              value={value}
+              onChange={handleInputChange}
+            />
+
+            <button onClick={handleClear} className="search-btn">
+              <span>Clear</span>
+            </button>
+          </Form>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Table>
-            {/* {data.allTssMember.nodes.slice(0, itemsToShow).map((v, i) => {
-              const image = getImage(v.localImage)
-              const imageBg = getImage(data.bg)
+            <div>
+              {searchResults.length > 0
+                ? searchResults.slice(0, limit).map((v, i) => {
+                    const image = getImage(v.localImage)
+                    const imageBg = getImage(data.bg)
 
-              return <ListItem key={i} v={v} image={image} imageBg={imageBg} />
-            })} */}
-            <div>Last updated: {dtime.toLocaleString()}</div>
-            <div>Blizz Profiles successfully loaded: {profiles.length}</div>
+                    return (
+                      <ListItem key={i} v={v} image={image} imageBg={imageBg} />
+                    )
+                  })
+                : profiles.slice(0, limit).map((v, i) => {
+                    const image = getImage(v.localImage)
+                    const imageBg = getImage(data.bg)
 
-
-            <InfiniteScroll
-              dataLength={items.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={<h4>Loading...</h4>}
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>Yay! You have seen it all</b>
-                </p>
-              }
-            >
-              {items.map((v, i) => {
-                const image = getImage(v.localImage)
-                const imageBg = getImage(data.bg)
-
-                return (
-                  <ListItem key={i} v={v} image={image} imageBg={imageBg} />
-                )
-              })}
-            </InfiniteScroll>
+                    return (
+                      <ListItem key={i} v={v} image={image} imageBg={imageBg} />
+                    )
+                  })}
+            </div>
+            <div>
+              {limit < searchResults.length || limit < profiles.length ? (
+                <button onClick={handleLoad}>Load more</button>
+              ) : (
+                ""
+              )}
+            </div>
           </Table>
         </Col>
       </Row>

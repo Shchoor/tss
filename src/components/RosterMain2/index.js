@@ -37,10 +37,7 @@ const Cell = styled.div`
     border-right-width: 0;
   }
 
-  &:nth-child(1) {
-    width: 30%;
-  }
-  &:nth-child(3) {
+  &:nth-child(4) {
     width: 10%;
   }
 
@@ -73,6 +70,7 @@ const removeNode = list => {
       level: item.node.level,
       Class: item.node.Class,
       rank: item.node.rank,
+      rankIndex: item.node.rankIndex,
     })
   })
 
@@ -91,13 +89,16 @@ const Index = () => {
             note
             rank
             Class
+            rankIndex
           }
         }
       }
     }
   `)
 
-  const rosterList = removeNode(data.allNotesJson.edges)
+  const rosterList = removeNode(data.allNotesJson.edges).sort(
+    (a, b) => a.rankIndex - b.rankIndex
+  )
   const [isLoading, setIsLoading] = useState(true)
   const [search, setSearch] = useState([])
   const [searchResults, setSearchResults] = useState([])
@@ -128,7 +129,7 @@ const Index = () => {
   const rebuildIndex = () => {
     const dataToSearch = new JsSearch.Search("id")
 
-    dataToSearch.indexStrategy = new JsSearch.AllSubstringsIndexStrategy()
+    dataToSearch.indexStrategy = new JsSearch.PrefixIndexStrategy()
     dataToSearch.sanitizer = new JsSearch.LowerCaseSanitizer()
     dataToSearch.searchIndex = new JsSearch.TfIdfSearchIndex("id")
     dataToSearch.addIndex("name")
@@ -185,9 +186,10 @@ const Index = () => {
                           ? `(${numberOfCharacters})`
                           : ""}
                       </Cell>
+                      <Cell>{v.rank}</Cell>
                       <Cell>{v.note}</Cell>
-                      <Cell>{v.level}</Cell>
                       <Cell>{v.Class}</Cell>
+                      <Cell>level:{v.level}</Cell>
                       <Cell>
                         <Link
                           target="_blank"
@@ -214,9 +216,11 @@ const Index = () => {
                           ? `(${numberOfCharacters})`
                           : ""}
                       </Cell>
+                      <Cell>{v.rank}</Cell>
                       <Cell>{v.note}</Cell>
-                      <Cell>{v.level}</Cell>
                       <Cell>{v.Class}</Cell>
+                      <Cell>level:{v.level}</Cell>
+
                       <Cell>
                         <Link
                           target="_blank"

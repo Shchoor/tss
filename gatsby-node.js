@@ -62,11 +62,7 @@ exports.sourceNodes = async ({ actions }) => {
           `${member.character.key.href}&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
         )
       const resProfile = await fetchProfileByKey()
-      console.log(
-        "_________________________________________________________________________________________________________________" +
-          key
-      )
-      // console.log(member.character.name)
+   
 
       // fetch eatch member profile
       const fetchUserMedia = () =>
@@ -74,8 +70,6 @@ exports.sourceNodes = async ({ actions }) => {
           `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=US8quFnSY4m3Zq5kq6vuaTU0Jyn58SNpma`
         )
       const resMedia = await fetchUserMedia()
-
-   
 
       const userNode = {
         id: `${key}`,
@@ -91,11 +85,20 @@ exports.sourceNodes = async ({ actions }) => {
         ilvl: resProfile.data.equipped_item_level,
         classId: resProfile.data.character_class.id,
         specId: resProfile.data.active_spec.id,
-        covenantId: resProfile.data.covenant_progress.chosen_covenant.id,
         avatar: resMedia.data.assets[0].value,
         note: dictionary[member.character.name].note,
-        lastUpdated: lastUpdated
+        lastUpdated: lastUpdated,
       }
+
+
+      try {
+        userNode.covenantId =
+          resProfile.data.covenant_progress.chosen_covenant.id
+      } catch (err) {
+        userNode.covenantId = 999
+        console.log("no covenant, user: " + member.character.name)
+      }
+
 
       const contentDigest = crypto
         .createHash(`md5`)
@@ -103,12 +106,17 @@ exports.sourceNodes = async ({ actions }) => {
         .digest(`hex`)
       userNode.internal.contentDigest = contentDigest
 
+
+      console.log(
+        "___________________________________________________________________________________________" +
+          key + " " + member.character.name
+      )
       createNode(userNode)
     } catch (error) {
-      console.log(error)
+      console.log(error.response)
     }
 
-    await sleep(100)
+    await sleep(10)
   }
 
   return
