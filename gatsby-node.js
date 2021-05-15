@@ -31,7 +31,7 @@ async function readStats(path) {
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
 
-  const token = "USR26XVwzCDAVwZCQV0dZgNz619skTo9BX"
+  const token = "UScUDdFcU8t5y5muPspkqJeWpC8k6q2Oik"
 
   let notesFromFile = await readFile("./src/data/notes.json")
   let parsedJsonNotes = JSON.parse(notesFromFile)
