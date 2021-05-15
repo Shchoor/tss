@@ -1,5 +1,5 @@
 import React from "react"
-import MainHero from "../components/MainHero"
+import MainHero from "../components/Mainhero"
 import StepsToJoin from "../components/StepsToJoin"
 import {graphql } from "gatsby"
 
