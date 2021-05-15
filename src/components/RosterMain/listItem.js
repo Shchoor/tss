@@ -132,17 +132,18 @@ const Ilvl = styled.div`
 `
 
 const Level = styled.div`
-  font-size: 10px;
+  font-size: 12px;
   width: 24px;
   height: 24px;
   display: flex;
-  background: #212529;
   color: white;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
 `
 
 const ranks = [
+  "",
   "Scourgelord",
   "Quartermaster",
   "Paragon",
@@ -153,18 +154,21 @@ const ranks = [
   "Neutral",
   "Unfriendly",
 ]
-// const ranks = [
-//   "Scourgelord",
-//   "Quartermaster",
-//   "Paragon",
-//   "Exalted",
-//   "Revered",
-//   "Honored",
-//   "Friendly",
-//   "Neutral",
-//   "Unfriendly",
-//   ,
-// ]
+const classColors = [
+  "", //0
+  "#c69b6d", //1
+  "#f48cba", //2
+  "#aad372", //3
+  "#fff468", //4
+  "#f0ebe0", //5
+  "#c41e3b", //6
+  "#201e21", //7
+  "#68ccef", //8
+  "#9382c9", //9
+  "#00ffba", //10
+  "#ff7c0a", //11
+  "#a330c9", //12
+]
 
 const LItem = ({ imageBg, image, v }) => {
   return (
@@ -176,7 +180,7 @@ const LItem = ({ imageBg, image, v }) => {
       </CellImg>
       <CellLeft>
         <div>
-          <h5>{v.name}</h5>
+          <h5 style={{ color: classColors[v.classId] }}>{v.name}</h5>
           <h6>{v.note ? `${v.note}` : " "}</h6>
           <ClassSpec>
             <ClassImage

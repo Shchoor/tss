@@ -31,7 +31,7 @@ async function readStats(path) {
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
 
-  const token = 'USR26XVwzCDAVwZCQV0dZgNz619skTo9BX'
+  const token = "USR26XVwzCDAVwZCQV0dZgNz619skTo9BX"
 
   let notesFromFile = await readFile("./src/data/notes.json")
   let parsedJsonNotes = JSON.parse(notesFromFile)
@@ -60,11 +60,8 @@ exports.sourceNodes = async ({ actions }) => {
 
     try {
       const fetchProfileByKey = () =>
-        axios.get(
-          `${member.character.key.href}&access_token=${token}`
-        )
+        axios.get(`${member.character.key.href}&access_token=${token}`)
       const resProfile = await fetchProfileByKey()
-   
 
       // fetch eatch member profile
       const fetchUserMedia = () =>
@@ -92,7 +89,6 @@ exports.sourceNodes = async ({ actions }) => {
         lastUpdated: lastUpdated,
       }
 
-
       try {
         userNode.covenantId =
           resProfile.data.covenant_progress.chosen_covenant.id
@@ -101,24 +97,24 @@ exports.sourceNodes = async ({ actions }) => {
         console.log("no covenant, user: " + member.character.name)
       }
 
-
       const contentDigest = crypto
         .createHash(`md5`)
         .update(JSON.stringify(userNode))
         .digest(`hex`)
       userNode.internal.contentDigest = contentDigest
 
-
       console.log(
         "___________________________________________________________________________________________" +
-          key + " " + member.character.name
+          key +
+          " " +
+          member.character.name
       )
       createNode(userNode)
     } catch (error) {
       console.log(error.response)
     }
 
-    await sleep(10)
+    // await sleep(10)
   }
 
   return

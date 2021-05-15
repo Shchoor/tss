@@ -1,18 +1,16 @@
 import React from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import { useStaticQuery, graphql } from "gatsby"
+import { Link } from "gatsby"
 import styled from "styled-components"
+import Button from "@material-ui/core/Button"
+import { withStyles } from "@material-ui/core/styles"
 
 const ContainerS = styled(Container)`
-  /* max-width: 100px;
-  margin: 5px;
-  display: flex; */
   max-width: 100%;
   max-height: 1300px;
   height: 100vh;
   position: relative;
-  z-index: -1;
 `
 
 const Gimg = styled(GatsbyImage)`
@@ -24,6 +22,7 @@ const Gimg = styled(GatsbyImage)`
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: -1;
 `
 
 const Text = styled.div`
@@ -39,30 +38,13 @@ const Text = styled.div`
   justify-content: center;
 
   h1 {
-    font-family: Eczar;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 56px;
-    line-height: 46px;
     text-align: center;
-    letter-spacing: 3px;
-    text-transform: capitalize;
     color: #ffffff;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     max-width: 450px;
   }
 
   h2 {
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 54px;
-    /* or 270% */
-
     text-align: center;
-    letter-spacing: 1px;
-    text-transform: uppercase;
 
     color: #ffffff;
     margin-bottom: 0px;
@@ -73,44 +55,36 @@ const Text = styled.div`
   }
 
   h3 {
-    font-family: Eczar;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 40px;
-    line-height: 54px;
-    /* or 150% */
-
     text-align: center;
-    letter-spacing: 3px;
-    text-transform: capitalize;
-
     color: #ffffff;
-
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 `
 
-const Linkg = styled.a`
-  display: flex;
-  justify-content:center;
-  align-items:center;
-  background: #823b3b;
+const ColorButton = withStyles(theme => ({
+  root: {
+    color: "WHITE",
+    backgroundColor: "#823b3b",
+    fontFamily: "Eczar",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: "18px",
+    lineHeight: "24px",
+    boxShadow: "0px 14px 20px rgba(0, 0, 0, 0.25)",
+    width: "160px",
+    height: "46px",
+    borderRadius: "0",
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: "#823b3b",
+    },
+  },
+}))(Button)
+
+const Linkg = styled(Link)`
   mix-blend-mode: normal;
-  box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.25);
-
-  font-family: Eczar;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 24px;
-  /* or 133% */
-
   text-align: center;
-
-  color: #ffffff;
   text-decoration: none;
-  width: 160px;
-  height: 46px;
+  margin-top: 50px;
 `
 
 const MainHero = ({ bgImage }) => {
@@ -152,7 +126,13 @@ const MainHero = ({ bgImage }) => {
             </h2>
             <h3>in World of Warcraft</h3>
 
-            <Linkg to="/how-to-join">Join us</Linkg>
+            {/* <Linkg to="/how-to-join">Join us</Linkg> */}
+
+            <Linkg to="/how-to-join">
+              <ColorButton variant="contained" color="primary">
+                Join us
+              </ColorButton>
+            </Linkg>
           </Text>
         </Col>
       </Row>

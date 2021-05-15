@@ -135,7 +135,7 @@ const Index = () => {
       rebuildIndex()
     } else {
       setIsError(true)
-      console.log("error with rebuild index")
+      console.log("error with rebuild index" + isError)
     }
   }, [])
 
