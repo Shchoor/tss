@@ -21,6 +21,7 @@ const Cell = styled.div`
   h6 {
     margin-bottom: 10px;
     color: #f8b700;
+    min-height: 15px;
   }
 
   p {
@@ -35,10 +36,24 @@ const Cell = styled.div`
 `
 const CellImg = styled(Cell)`
   line-height: 0;
+  position: relative;
 `
 const CellLeft = styled(Cell)`
   display: flex;
-  width: calc(60% - 80px);
+  width: calc(80% - 80px);
+
+  > div:nth-child(1) {
+    width: 40%;
+  }
+  > div:nth-child(2) {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 11px;
+  }
 `
 
 const CellRight = styled(Cell)`
@@ -46,7 +61,7 @@ const CellRight = styled(Cell)`
   display: flex;
   align-items: flex-end;
   flex-direction: column;
-  width: calc(40%);
+  width: calc(20%);
 `
 
 const Gimg = styled(GatsbyImage)`
@@ -116,6 +131,41 @@ const Ilvl = styled.div`
   font-size: 10px;
 `
 
+const Level = styled.div`
+  font-size: 10px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  background: #212529;
+  color: white;
+  justify-content: center;
+  align-items: center;
+`
+
+const ranks = [
+  "Scourgelord",
+  "Quartermaster",
+  "Paragon",
+  "Exalted",
+  "Revered",
+  "Honored",
+  "Friendly",
+  "Neutral",
+  "Unfriendly",
+]
+// const ranks = [
+//   "Scourgelord",
+//   "Quartermaster",
+//   "Paragon",
+//   "Exalted",
+//   "Revered",
+//   "Honored",
+//   "Friendly",
+//   "Neutral",
+//   "Unfriendly",
+//   ,
+// ]
+
 const LItem = ({ imageBg, image, v }) => {
   return (
     <ListItem>
@@ -130,13 +180,15 @@ const LItem = ({ imageBg, image, v }) => {
           <h6>{v.note ? `${v.note}` : " "}</h6>
           <ClassSpec>
             <ClassImage
-              style={{marginRight: 5}}
+              style={{ marginRight: 5 }}
               src={`class/${v.classId}_class.png`}
             />
             <SpecImage src={`spec/${v.specId}.jpg`} />
+            <Level>{v.level}</Level>
             <Ilvl>Item level: {v.ilvl}</Ilvl>
           </ClassSpec>
         </div>
+        <div>{ranks[v.rank]}</div>
       </CellLeft>
 
       <CellRight>

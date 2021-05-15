@@ -5,6 +5,10 @@ import { Container, Row, Col } from "react-bootstrap"
 import { getImage } from "gatsby-plugin-image"
 import ListItem from "./listItem"
 import * as JsSearch from "js-search"
+import Button from "@material-ui/core/Button"
+
+import ToggleButton from "@material-ui/lab/ToggleButton"
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
 
 const ContainerWrapper = styled(Container)`
   max-width: 890px;
@@ -16,13 +20,63 @@ const Table = styled.div`
   color: #212529;
 `
 const Form = styled.form`
+  margin-top: 40px;
+  box-shadow: 9px 9px 14px rgb(0 0 0 / 7%);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+
   input {
-    width: 90%;
-  }
-  button {
-    width: 10%;
+    width: 100%;
+    max-width: 900px;
+    border: none;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    outline: none;
   }
 `
+
+const SearchIcon = styled.div`
+  width: 20px;
+  height: 28px;
+  position: absolute;
+  right: 20px;
+
+  svg path {
+    fill: rgba(83, 150, 134, 0.6);
+  }
+`
+
+const LoadMore = styled(Button)`
+  background: #823b3b;
+  mix-blend-mode: normal;
+  box-shadow: 0px 14px 20px rgba(0, 0, 0, 0.25);
+  max-width: 160px;
+  height: 30px;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  /* justify-contentc */
+  justify-content: center;
+  border: none;
+  align-items: center;
+`
+
+// const ColorButton = withStyles((theme) => ({
+//   root: {
+//     color: theme.palette.getContrastText('black'),
+//     backgroundColor: 'black',
+//     '&:hover': {
+//       backgroundColor: 'grey',
+//     },
+//   },
+// }))(Button);
 
 const Index = () => {
   const data = useStaticQuery(graphql`
@@ -70,15 +124,20 @@ const Index = () => {
       rebuildIndex()
     } else {
       setIsError(true)
-      console.log("error with rebuild index")
+      console.log("error with rebuild index:" + isError)
     }
   }, [])
 
   useEffect(() => {
     if (!isLoading) {
-      const queryResult = search.search(value)
-      setSearchResults(queryResult)
-      // console.log(queryResult)
+      if (value === "") {
+        setSearchResults(profiles)
+      } else {
+        const queryResult = search.search(value)
+
+        const timeOutId = setTimeout(() => setSearchResults(queryResult), 1000)
+        return () => clearTimeout(timeOutId)
+      }
     }
   }, [isLoading, value])
 
@@ -104,32 +163,22 @@ const Index = () => {
   const handleSubmit = event => {
     event.preventDefault()
   }
-  const handleClear = event => {
-    setValue("")
-  }
-
-  // const [hasMore, setHasMore] = useState(true)
-  // const [items, setItems] = useState(searchResults.slice(0, showPerLoad))
-  // const [shown, setShown] = useState(showPerLoad)
-
-  // const fetchMoreData = () => {
-  //   if (items.length >= searchResults.length) {
-  //     setHasMore(false)
-  //     return
-  //   }
-  //   setItems(items.concat(searchResults.slice(shown, shown + showPerLoad)))
-  //   setShown(shown + showPerLoad)
-  // }
 
   let lastUpdated = Date.parse(profiles[0].lastUpdated)
   let dtime = new Date(lastUpdated)
 
-  const showByLoad = 50
-
-  const [limit, setLimit] = React.useState(showByLoad)
-
+  const showByLoad = 100
+  const [limit, setLimit] = React.useState(20)
   const handleLoad = (event, value) => {
     setLimit(limit + showByLoad)
+  }
+
+  const [filter, setFilter] = useState("rank")
+
+  const handleFilter = (event, newFilter) => {
+    if (newFilter !== null) {
+      setFilter(newFilter)
+    }
   }
 
   return (
@@ -140,20 +189,44 @@ const Index = () => {
           <div>Blizz Profiles successfully loaded: {profiles.length}</div>
         </Col>
       </Row>
+
+      <Row>
+        <Col>
+          <ToggleButtonGroup
+            value={filter}
+            exclusive
+            onChange={handleFilter}
+            aria-label="text alignment"
+          >
+            <ToggleButton value="rank" aria-label="left aligned">
+              Rank
+            </ToggleButton>
+            <ToggleButton value="ilvl" aria-label="centered">
+              Item level
+            </ToggleButton>
+            <ToggleButton value="level" aria-label="right aligned">
+              Level
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Col>
+      </Row>
+
       <Row>
         <Col>
           <Form onSubmit={handleSubmit}>
             <input
               type="text"
               aria-label="Search"
-              placeholder="Search"
+              placeholder="Search by note, name"
               value={value}
               onChange={handleInputChange}
             />
 
-            <button onClick={handleClear} className="search-btn">
-              <span>Clear</span>
-            </button>
+            <SearchIcon>
+              <svg focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+              </svg>
+            </SearchIcon>
           </Form>
         </Col>
       </Row>
@@ -162,26 +235,37 @@ const Index = () => {
           <Table>
             <div>
               {searchResults.length > 0
-                ? searchResults.slice(0, limit).map((v, i) => {
-                    const image = getImage(v.localImage)
-                    const imageBg = getImage(data.bg)
-
-                    return (
-                      <ListItem key={i} v={v} image={image} imageBg={imageBg} />
+                ? searchResults
+                    .sort(
+                      filter === "rank"
+                        ? (a, b) => a.rank - b.rank
+                        : filter === "ilvl"
+                        ? (a, b) => b.ilvl - a.ilvl
+                        : filter === "level"
+                        ? (a, b) => b.level - a.level
+                        : null
                     )
-                  })
-                : profiles.slice(0, limit).map((v, i) => {
-                    const image = getImage(v.localImage)
-                    const imageBg = getImage(data.bg)
+                    .slice(0, limit)
+                    .map((v, i) => {
+                      const image = getImage(v.localImage)
+                      const imageBg = getImage(data.bg)
 
-                    return (
-                      <ListItem key={i} v={v} image={image} imageBg={imageBg} />
-                    )
-                  })}
+                      return (
+                        <ListItem
+                          key={i}
+                          v={v}
+                          image={image}
+                          imageBg={imageBg}
+                        />
+                      )
+                    })
+                : "Nothing found"}
             </div>
             <div>
-              {limit < searchResults.length || limit < profiles.length ? (
-                <button onClick={handleLoad}>Load more</button>
+              limit: {limit}
+              sl: {searchResults.length}
+              {limit <= searchResults.length ? (
+                <LoadMore onClick={handleLoad}>Load more</LoadMore>
               ) : (
                 ""
               )}

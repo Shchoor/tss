@@ -31,6 +31,8 @@ async function readStats(path) {
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
 
+  const token = 'USR26XVwzCDAVwZCQV0dZgNz619skTo9BX'
+
   let notesFromFile = await readFile("./src/data/notes.json")
   let parsedJsonNotes = JSON.parse(notesFromFile)
   let dictionary = Object.assign(
@@ -48,7 +50,7 @@ exports.sourceNodes = async ({ actions }) => {
   // fetch TSS guild roster
   const fetchRoster = () =>
     axios.get(
-      `https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
+      `https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=${token}`
     )
   const res = await fetchRoster()
 
@@ -59,7 +61,7 @@ exports.sourceNodes = async ({ actions }) => {
     try {
       const fetchProfileByKey = () =>
         axios.get(
-          `${member.character.key.href}&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih`
+          `${member.character.key.href}&access_token=${token}`
         )
       const resProfile = await fetchProfileByKey()
    
@@ -67,7 +69,7 @@ exports.sourceNodes = async ({ actions }) => {
       // fetch eatch member profile
       const fetchUserMedia = () =>
         axios.get(
-          `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=US8quFnSY4m3Zq5kq6vuaTU0Jyn58SNpma`
+          `https://eu.api.blizzard.com/profile/wow/character/ravencrest/${member.character.name.toLowerCase()}/character-media?namespace=profile-eu&locale=en_US&access_token=${token}`
         )
       const resMedia = await fetchUserMedia()
 

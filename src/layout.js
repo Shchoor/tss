@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Header from "./components/Header"
-// import Footer from "./Footer/footer"
+import Footer from "./components/Footer"
 // import AddedToCard from "../components/AddedToCard/AddedToCard"
 // import Cookies from "./Cookies/Cookies"
 // import { Helmet } from "react-helmet"
@@ -27,7 +27,7 @@ const Layout = ({ children, location }) => {
 
       <main>{children}</main>
 
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }

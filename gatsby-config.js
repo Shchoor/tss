@@ -13,7 +13,17 @@ module.exports = {
       },
     },
     `gatsby-plugin-image`,
-    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-plugin-sharp`,
+      options: {
+        defaults: {
+          formats: [`auto`, `webp`],
+          placeholder: `dominantColor`,
+          quality: 100,
+          breakpoints: [750, 1080, 1366, 1920],
+        },
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-json`,
     {
@@ -24,11 +34,19 @@ module.exports = {
         ignore: [`**/\.*`], // ignore files starting with a dot
       },
     },
+    {
+      resolve: `gatsby-plugin-material-ui`,
+      options: {
+        stylesProvider: {
+          injectFirst: true,
+        },
+      },
+    },
     `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [`poppins:300,400,500,600,700`],
+        fonts: [`Open+Sans:300,400,600,700`, `Eczar:400,600,700`],
         display: "swap",
       },
     },
@@ -36,8 +54,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-remote-images`,
       options: {
-        nodeType: 'TssMember',
-        imagePath: 'avatar',
+        nodeType: "TssMember",
+        imagePath: "avatar",
       },
     },
     // {
