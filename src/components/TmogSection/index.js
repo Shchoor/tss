@@ -146,11 +146,11 @@ const Index = () => {
           gatsbyImageData(width: 410, placeholder: BLURRED)
         }
       }
-      #   mail: file(relativePath: { eq: "mail.jpg" }) {
-      #     childImageSharp {
-      #       gatsbyImageData(width: 410, placeholder: BLURRED)
-      #     }
-      #   }
+        mail: file(relativePath: { eq: "mail.jpg" }) {
+          childImageSharp {
+            gatsbyImageData(width: 410, placeholder: BLURRED)
+          }
+        }
       plate: file(relativePath: { eq: "plate.jpg" }) {
         childImageSharp {
           gatsbyImageData(width: 410, placeholder: BLURRED)
@@ -367,7 +367,7 @@ const Index = () => {
                       Mace + Off-Hand ={" "}
                       <b>
                         <a
-                          style={{ color: "#0070dd" }}
+                          style={{ color: "#a335ee" }}
                           data-wowhead="item=23544"
                           target="_blank"
                           rel="noreferrer"
@@ -507,7 +507,7 @@ const Index = () => {
               </Card>
 
               <Card>
-                <CardImg image={plate} alt="mail" />
+                <CardImg image={mail} alt="mail" />
 
                 <CardTextWrapper>
                   <h3>Mail</h3>
