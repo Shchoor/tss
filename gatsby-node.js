@@ -97,7 +97,7 @@ exports.sourceNodes = async ({ actions }) => {
   const res = await fetchRoster()
 
   //loop members
-  for (const key in res.data.members.slice(0, 5)) {
+  for (const key in res.data.members) {
     let member = res.data.members[key]
 
     try {
