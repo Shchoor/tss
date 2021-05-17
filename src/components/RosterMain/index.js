@@ -114,11 +114,30 @@ const FilterToggleNew = styled(SortToggle)`
   span {
     width: 100%;
   }
+
+  @media (max-width: 991px) {
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 0 4px;
+  }
 `
 
 const ToggleButtonGroupS = styled(ToggleButtonGroup)`
   justify-content: flex-end;
   width: 100%;
+
+  @media (max-width: 991px) {
+    margin-top: 10px;
+    justify-content: center;
+  }
+`
+
+const ColC = styled(Col)``
+const ColF = styled(Col)`
+  @media (max-width: 991px) {
+    display: flex;
+    justify-content: center;
+  }
 `
 
 const ColorButton = withStyles(theme => ({
@@ -169,7 +188,7 @@ const Index = () => {
           }
         }
       }
-      bg: file(relativePath: { eq: "background.png" }) {
+      bg: file(relativePath: { eq: "footer-bg.jpg" }) {
         childImageSharp {
           gatsbyImageData(width: 690, placeholder: BLURRED)
         }
@@ -275,7 +294,7 @@ const Index = () => {
     <section>
       <ContainerWrapper>
         <Row>
-          <Col>
+          <ColF>
             <ToggleButtonGroup
               value={filter}
               exclusive
@@ -292,9 +311,9 @@ const Index = () => {
                 Level
               </SortToggleNew>
             </ToggleButtonGroup>
-          </Col>
+          </ColF>
 
-          <Col>
+          <ColC>
             <ToggleButtonGroupS
               value={filterClass}
               exclusive
@@ -329,7 +348,7 @@ const Index = () => {
                 <ClassImage src={`class/6_class.png`} />
               </FilterToggleNew>
             </ToggleButtonGroupS>
-          </Col>
+          </ColC>
         </Row>
 
         <Row>
@@ -365,7 +384,7 @@ const Index = () => {
                 })}
               </div>
               <div>
-                {limit <= displayResults.length ? (
+                {limit < displayResults.length ? (
                   <ColorButton onClick={handleLoad}>Load more</ColorButton>
                 ) : (
                   ""

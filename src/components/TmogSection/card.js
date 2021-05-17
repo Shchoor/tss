@@ -1,11 +1,11 @@
 import React from 'react'
 
-const HowToJoin = () => {
+const Card = () => {
     return (
         <div>
-            how to join
+            
         </div>
     )
 }
 
-export default HowToJoin
+export default Card

@@ -10,25 +10,26 @@ const ContainerWrapper = styled(Container)`
   padding-bottom: 50px;
 `
 const Table = styled.div`
-  border-radius: 0.25rem;
   padding: 0;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 8px;
   color: #212529;
+  overflow: scroll;
 `
 
 const ListItem = styled.li`
-  display: flex;
+  display: grid;
+  grid-template-columns: 150px 150px 150px 150px 100px 100px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.01);
+  width: 100%;
 
   &:last-child {
     border-bottom-width: 0;
   }
 `
 const Cell = styled.div`
-  width: 20%;
+  /* width: 20%; */
   font-size: 14px;
   border-right: 1px solid rgba(0, 0, 0, 0.125);
   padding: 1rem 5px;
@@ -36,10 +37,10 @@ const Cell = styled.div`
   &:last-child {
     border-right-width: 0;
   }
-
+  /* 
   &:nth-child(4) {
     width: 10%;
-  }
+  } */
 
   @media (max-width: 767px) {
     font-size: 10px;

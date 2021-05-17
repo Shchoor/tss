@@ -12,6 +12,10 @@ const ListItem = styled.li`
   padding: 20px 25px;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 991px) {
+    padding: 12px 8px;
+  }
 `
 const Cell = styled.div`
   h5 {
@@ -54,6 +58,12 @@ const CellLeft = styled(Cell)`
     font-weight: 700;
     margin-bottom: 11px;
   }
+
+  @media (max-width: 991px) {
+    > div:nth-child(1) {
+      width: 100%;
+    }
+  }
 `
 
 const CellRight = styled(Cell)`
@@ -77,7 +87,7 @@ const Gimg = styled(GatsbyImage)`
 
 const Gbackground = styled(GatsbyImage)`
   position: absolute !important;
-  top: -18%;
+  top: 0;
   right: 0;
   left: 0;
   /* bottom: 0; */
@@ -107,6 +117,12 @@ const Link = styled.a`
   &:hover {
     color: black;
     background-color: white;
+  }
+
+  @media (max-width: 991px) {
+    padding: 3px 10px;
+    min-width: unset;
+    font-size: 9px;
   }
 `
 
@@ -140,6 +156,12 @@ const Level = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
+`
+
+const Rank = styled.div`
+  @media (max-width: 991px) {
+    display: none !important;
+  }
 `
 
 const ranks = [
@@ -192,7 +214,7 @@ const LItem = ({ imageBg, image, v }) => {
             <Ilvl>Item level: {v.ilvl}</Ilvl>
           </ClassSpec>
         </div>
-        <div>{ranks[v.rank]}</div>
+        <Rank>{ranks[v.rank]}</Rank>
       </CellLeft>
 
       <CellRight>

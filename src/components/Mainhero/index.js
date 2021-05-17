@@ -14,9 +14,6 @@ const ContainerS = styled(Container)`
 `
 
 const Gimg = styled(GatsbyImage)`
-  /* max-width: 100px;
-  margin: 5px;
-  display: flex; */
   position: absolute;
   top: 0;
   left: 0;
@@ -27,8 +24,8 @@ const Gimg = styled(GatsbyImage)`
 
 const Text = styled.div`
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 5px;
+  right: 5px;
   top: 10%;
   bottom: 0;
   margin: auto;
@@ -36,6 +33,11 @@ const Text = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+
+  @media(max-width: 991px) {
+    top: 90px;
+  }
 
   h1 {
     text-align: center;
@@ -128,7 +130,7 @@ const MainHero = ({ bgImage }) => {
 
             {/* <Linkg to="/how-to-join">Join us</Linkg> */}
 
-            <Linkg to="/how-to-join">
+            <Linkg to="#join">
               <ColorButton variant="contained" color="primary">
                 Join us
               </ColorButton>

@@ -4,6 +4,16 @@ require("dotenv").config({
 
 module.exports = {
   /* Your site config here */
+  siteMetadata: {
+    siteUrl: `https://thescarletscourge.com`,
+    title: `The Scarlet Scourge - EU Ravencrest Guild`,
+    description: `We are a unique guild concept founded on 11/1/2019 on the realm of Argent Dawn (We are now located on Ravencrest EU). The idea of the guild is that open world fun always comes first, and our main goal is to be the biggest and strongest world PvP guild in Europe. We have a long history of fighting the Alliance in Stormwind and in various other locations across Azeroth and beyond.`,
+    image: `/icons/icon.png`,
+    siteName: "LeaseFinds",
+    siteLanguage: "en",
+    ogLanguage: "en_US",
+    icon: `/icons/icon.png`,
+  },
   plugins: [
     {
       resolve: "gatsby-source-filesystem",

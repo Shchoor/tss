@@ -9,6 +9,7 @@ import { Container, Row, Col } from "react-bootstrap"
 import loadable from "@loadable/component"
 import { withStyles } from "@material-ui/core/styles"
 import Tooltip from "@material-ui/core/Tooltip"
+import Seo from "../components/seo"
 
 const RosterMain2 = loadable(() => import("../components/RosterMain2"))
 
@@ -39,6 +40,11 @@ const ColT = styled(Col)`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  @media (max-width: 991px) {
+    justify-content: center;
+    margin-top: 20px;
+  }
 `
 
 const TableToggle = withStyles(theme => ({
@@ -91,6 +97,7 @@ const Roster = () => {
 
   return (
     <Layout>
+      <Seo />
       <Section>
         <ContainerS>
           <Row>
@@ -106,10 +113,7 @@ const Roster = () => {
                 aria-label="text alignment"
               >
                 <TableToggleNew value="1" aria-label="left aligned">
-                  <Tooltip
-                    title="Blizzard Profiles from API"
-                    placement="top"
-                  >
+                  <Tooltip title="Blizzard Profiles from API" placement="top">
                     <span>PR</span>
                   </Tooltip>
                 </TableToggleNew>

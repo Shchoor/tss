@@ -84,7 +84,7 @@ const Title = styled.h4`
 const Index = () => {
   const data = useStaticQuery(graphql`
     query {
-      logo: file(relativePath: { eq: "tss_logo.png" }) {
+      logo: file(relativePath: { eq: "logo.png" }) {
         childImageSharp {
           gatsbyImageData(width: 200, placeholder: BLURRED)
         }
@@ -110,7 +110,7 @@ const Index = () => {
           <Col md={12}>
             <ColInner>
               <LinkWrapper>
-                <Linkn href="/" target="_blank">
+                <Linkn href="https://discord.gg/k6uCZ26" target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -152,7 +152,7 @@ const Index = () => {
                 </Linkn>
               </LinkWrapper>
               <LinkWrapper>
-                <Linkn href="/" target="_blank">
+                <Linkn href="https://twitter.com/RL_TSS/" target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -169,7 +169,7 @@ const Index = () => {
               </LinkWrapper>
 
               <LinkWrapper>
-                <Linkn href="/" target="_blank">
+                <Linkn href="https://www.facebook.com/TheScarletScourge" target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
