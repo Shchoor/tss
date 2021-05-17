@@ -68,13 +68,27 @@ module.exports = {
         imagePath: "avatar",
       },
     },
-    // {
-    //   resolve: 'gatsby-source-rest-api',
-    //   options: {
-    //     endpoints: [
-    //       'https://eu.api.blizzard.com/data/wow/guild/ravencrest/the-scarlet-scourge/roster?namespace=profile-eu&locale=en_US&access_token=USBYrTjTNAsxVt5wIqYecAd3xbdBVw99ih'
-    //     ],
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `The Scarlet Scourge`,
+        short_name: `TSS`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#a2466c`,
+        display: `standalone`,
+        icon: `src/images/logo.png`, // This path is relative to the root of the site.
+      },
+    },
+    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        // You can add multiple tracking ids and a pageview event will be fired for all of them.
+        trackingIds: [
+          "G-GCZKGKNTG4", // Google Analytics / GA
+        ],
+      },
+    },
   ],
 }

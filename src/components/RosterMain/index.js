@@ -384,7 +384,7 @@ const Index = () => {
                 })}
               </div>
               <div>
-                {limit < displayResults.length ? (
+                {limit <= displayResults.length ? (
                   <ColorButton onClick={handleLoad}>Load more</ColorButton>
                 ) : (
                   ""
