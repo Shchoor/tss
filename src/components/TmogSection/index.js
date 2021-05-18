@@ -146,11 +146,11 @@ const Index = () => {
           gatsbyImageData(width: 410, placeholder: BLURRED)
         }
       }
-        mail: file(relativePath: { eq: "mail.jpg" }) {
-          childImageSharp {
-            gatsbyImageData(width: 410, placeholder: BLURRED)
-          }
+      mail: file(relativePath: { eq: "mail.jpg" }) {
+        childImageSharp {
+          gatsbyImageData(width: 410, placeholder: BLURRED)
         }
+      }
       plate: file(relativePath: { eq: "plate.jpg" }) {
         childImageSharp {
           gatsbyImageData(width: 410, placeholder: BLURRED)
@@ -172,8 +172,8 @@ const Index = () => {
         <Row>
           <Col>
             <Text>
-              To reach higher rank in guild and to attend most events, you need
-              to acquire official guild transmog for your armor type.
+              To reach a higher rank in the guild and to attend most events, you
+              need to acquire the official guuld transmog for your armor type.
             </Text>
 
             <Text>

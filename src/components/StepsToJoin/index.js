@@ -88,9 +88,6 @@ const Index = () => {
               <br />
               [O = Ó, Ò, Ô, Ö, Õ, Ø]
             </Text>
-            <Text>
-              We use special characters (accents/umlauts) for our names.
-            </Text>
             <Text>Choose them at your own leisure. Example: Âbômínatîôñ</Text>
           </Col>
         </RowWhite>
@@ -99,7 +96,7 @@ const Index = () => {
           <Number n={2} color="#ffffff" />
 
           <Col>
-            <Title>Apply via ingame Guild Finder</Title>
+            <Title>Apply via the ingame guild finder</Title>
           </Col>
         </RowBlack>
 
@@ -107,11 +104,11 @@ const Index = () => {
           <Number n={3} color="#2C2F33" />
 
           <Col>
-            <Title>Join Discord</Title>
+            <Title>Join the Discord</Title>
             <Margin></Margin>
             <Text>
-              After successfully inside the guild come back to our discord and
-              ping staff member to get a role
+              After successfuly getting invited to the guild, return to our
+              discord and use our ticket system to get a role
             </Text>
           </Col>
         </RowWhite>
