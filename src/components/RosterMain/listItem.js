@@ -221,7 +221,7 @@ const LItem = ({ imageBg, image, v }) => {
         <ButtonWrapper>
           <Link
             target="_blank"
-            href={`https://check-pvp.fr/eu/Ravencrest/${v.name}`}
+            href={`https://check-pvp.fr/eu/Ravencrest/${v.name}?add=true`}
           >
             Check PvP
           </Link>
