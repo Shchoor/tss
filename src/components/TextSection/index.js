@@ -54,7 +54,7 @@ const Index = () => {
               is the theme; we are all undead, all named a variation of
               "Abomination" and that we all wear special scarlet crusade themed
               transmogs. We also make interesting world PvP montages and we are
-              one of the more popular guilds in World of Warcraft.
+              one of the most popular guilds in World of Warcraft.
             </Text>
           </Col>
         </RowS>

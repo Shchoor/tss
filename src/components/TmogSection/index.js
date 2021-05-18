@@ -173,7 +173,7 @@ const Index = () => {
           <Col>
             <Text>
               To reach a higher rank in the guild and to attend most events, you
-              need to acquire the official guuld transmog for your armor type.
+              need to acquire the official guild transmog for your armor type.
             </Text>
 
             <Text>

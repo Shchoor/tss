@@ -34,8 +34,7 @@ const Text = styled.div`
   align-items: center;
   justify-content: center;
 
-
-  @media(max-width: 991px) {
+  @media (max-width: 991px) {
     top: 90px;
   }
 
@@ -59,6 +58,12 @@ const Text = styled.div`
   h3 {
     text-align: center;
     color: #ffffff;
+
+    @media (max-width: 991px) {
+      font-size: 28px;
+      line-height: 41px;
+      margin-top: 20px;
+    }
   }
 `
 
