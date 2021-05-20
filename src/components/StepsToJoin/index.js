@@ -107,8 +107,15 @@ const Index = () => {
             <Title>Join the Discord</Title>
             <Margin></Margin>
             <Text>
-              After successfuly getting invited to the guild, return to our
-              discord and use our ticket system to get a role
+              After successfuly getting invited to the guild, return to our {` `}
+              <a
+                className="link-red"
+                href="https://discord.com/invite/k6uCZ26"
+                target="_blank"
+              >
+                discord
+              </a>{" "}
+              and use our ticket system to get a role
             </Text>
           </Col>
         </RowWhite>
@@ -120,11 +127,15 @@ const Index = () => {
             <Margin></Margin>
             <Text>Fill your guild note with your [nickname].</Text>
             <Text>
-              We also use our addon called abomiNATION to identify ourselves.
-              This displays Guild Notes as a tooltip on target or mouseover. The
-              addon also includes Identity 2 which adds your name in front of
-              your chat messages. Can be enabled for guild, party and raid chat
-              messages.
+              We also use our addon called {` `}
+              <a className="link-red" href="/data/abomiNATION_1.zip" download>
+                abomiNATION
+              </a>
+              {` `}
+              to identify ourselves. This displays Guild Notes as a tooltip on
+              target or mouseover. The addon also includes Identity 2 which adds
+              your name in front of your chat messages. Can be enabled for
+              guild, party and raid chat messages.
             </Text>
           </Col>
         </RowBlack>

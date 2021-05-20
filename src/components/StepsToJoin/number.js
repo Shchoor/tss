@@ -9,12 +9,11 @@ const Number = styled.div`
   line-height: 42px;
   text-align: center;
   position: absolute;
-  color: ${props => props.color};
   top: calc(45%);
-  left: -600px;
+  left: calc(50% - 682px);
   right: 0;
   bottom: 0;
-
+  width: 139px;
 `
 
 const Index = ({ n, color }) => {

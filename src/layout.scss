@@ -682,3 +682,13 @@ p {
   }
 }
 
+.link-red {
+  color: #823b3b;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all .3s;
+
+  &:hover {
+    color: #a03a3a;
+  }
+}
