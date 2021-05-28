@@ -15,6 +15,8 @@ module.exports = {
     icon: `/icons/icon.png`,
   },
   plugins: [
+    `gatsby-plugin-advanced-sitemap`,
+    "gatsby-plugin-robots-txt",
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -90,6 +92,5 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-sitemap`
   ],
 }
