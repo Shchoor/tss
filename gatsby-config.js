@@ -15,8 +15,15 @@ module.exports = {
     icon: `/icons/icon.png`,
   },
   plugins: [
+    `gatsby-plugin-netlify`,
     `gatsby-plugin-advanced-sitemap`,
-    "gatsby-plugin-robots-txt",
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        sitemap: 'https://thescarletscourge.com/sitemap.xml',
+    
+      }
+    },
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -82,7 +89,6 @@ module.exports = {
         icon: `src/images/logo.png`, // This path is relative to the root of the site.
       },
     },
-    `gatsby-plugin-netlify`,
     `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-google-gtag`,
@@ -93,5 +99,6 @@ module.exports = {
         ],
       },
     },
+    
   ],
 }
