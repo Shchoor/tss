@@ -318,17 +318,17 @@ const Header = () => {
                   </li>
                   <li>
                     <LinkWrapper>
-                      <Linkn to="/about">ABOUT US</Linkn>
+                      <Linkn to="/about/">ABOUT US</Linkn>
                     </LinkWrapper>
                   </li>
                   <li>
                     <LinkWrapper>
-                      <Linkn to="/official-tmog">OFFICIAL TMOG</Linkn>
+                      <Linkn to="/official-tmog/">OFFICIAL TMOG</Linkn>
                     </LinkWrapper>
                   </li>
                   <li>
                     <LinkWrapper>
-                      <Linkn to="/roster">ABOMINATIONS</Linkn>
+                      <Linkn to="/roster/">ABOMINATIONS</Linkn>
                     </LinkWrapper>
                   </li>
 
@@ -389,9 +389,9 @@ const Header = () => {
           <Coll lg={5}>
             <ColInner>
               <LinkWrapper>
-                <Linkn to="/about">ABOUT</Linkn>
-                <Linkn to="/roster">ABOMINATIONS</Linkn>
-                <Linkn to="/official-tmog">OFFICIAL TMOG</Linkn>
+                <Linkn to="/about/">ABOUT</Linkn>
+                <Linkn to="/roster/">ABOMINATIONS</Linkn>
+                <Linkn to="/official-tmog/">OFFICIAL TMOG</Linkn>
               </LinkWrapper>
             </ColInner>
           </Coll>
@@ -404,7 +404,11 @@ const Header = () => {
           </Col>
           <Twitch>
             <LinkWrapper>
-              <Linka href="https://www.twitch.tv/tss_milan" target="_blank">
+              <Linka
+                href="https://www.twitch.tv/tss_milan"
+                target="_blank"
+                rel="noreferrer"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="19"
@@ -425,7 +429,11 @@ const Header = () => {
           <Colr lg={5}>
             <ColInner>
               <LinkWrapper>
-                <Linka target="_blank" href="https://discord.gg/k6uCZ26">
+                <Linka
+                  target="_blank"
+                  href="https://discord.gg/k6uCZ26"
+                  rel="noreferrer"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -452,6 +460,7 @@ const Header = () => {
                 <Linka
                   target="_blank"
                   href="https://www.youtube.com/c/TheScarletScourge"
+                  rel="noreferrer"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -469,7 +478,12 @@ const Header = () => {
                 </Linka>
               </LinkWrapper>
               <LinkWrapper>
-                <Linka href="https://www.twitch.tv/tss_milan" target="_blank">
+                <Linka
+                  href="https://www.twitch.tv/tss_milan"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Twitch"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"

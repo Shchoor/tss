@@ -71,7 +71,7 @@ const Rights = styled.div`
   padding-top: 30px;
 `
 
-const Title = styled.h4`
+const Title = styled.h3`
   font-family: Eczar;
   font-style: normal;
   font-weight: bold;
@@ -110,7 +110,12 @@ const Index = () => {
           <Col md={12}>
             <ColInner>
               <LinkWrapper>
-                <Linkn href="https://discord.gg/k6uCZ26" target="_blank">
+                <Linkn
+                  href="https://discord.gg/k6uCZ26"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Discord"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -136,6 +141,8 @@ const Index = () => {
                 <Linkn
                   href="https://www.youtube.com/c/TheScarletScourge"
                   target="_blank"
+                  rel="noreferrer"
+                  aria-label="Youtube"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +159,12 @@ const Index = () => {
                 </Linkn>
               </LinkWrapper>
               <LinkWrapper>
-                <Linkn href="https://twitter.com/RL_TSS/" target="_blank">
+                <Linkn
+                  href="https://twitter.com/RL_TSS/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Twitter"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -169,7 +181,12 @@ const Index = () => {
               </LinkWrapper>
 
               <LinkWrapper>
-                <Linkn href="https://www.facebook.com/TheScarletScourge" target="_blank">
+                <Linkn
+                  href="https://www.facebook.com/TheScarletScourge"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Facebook"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -189,6 +206,7 @@ const Index = () => {
                 <Linkn
                   href="https://www.instagram.com/the_scarlet_scourge_/"
                   target="_blank"
+                  aria-label="Instagram"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

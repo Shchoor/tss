@@ -683,12 +683,12 @@ p {
 }
 
 .link-red {
-  color: #823b3b;
+  color: #a03a3a;
   text-decoration: none;
   font-weight: bold;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &:hover {
-    color: #a03a3a;
+    color: #823b3b;
   }
 }
