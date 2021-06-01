@@ -8,10 +8,9 @@ import Seo from "../components/seo"
 import Layout from "../layout"
 
 const About = ({ data }) => {
-  console.log(data)
   return (
     <Layout>
-      <Seo />
+      <Seo customTitle={'About | The Scarlet Scourge'}/>
       <InnerHero title="About us" />
       <TextSection />
       <ImageWithBtn bgImage={data.footerBg} btnText="Join us" btnUrl="/#join" />

@@ -6,7 +6,7 @@ import Seo from "../components/seo"
 const Author = () => {
   return (
     <Layout>
-      <Seo />
+      <Seo  customTitle={'Author | The Scarlet Scourge'} />
       <InnerHero title="About author" />
     
     </Layout>

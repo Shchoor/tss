@@ -97,7 +97,7 @@ const Roster = () => {
 
   return (
     <Layout>
-      <Seo />
+      <Seo customTitle={'Roster | The Scarlet Scourge'} />
       <Section>
         <ContainerS>
           <Row>

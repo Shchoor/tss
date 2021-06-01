@@ -7,7 +7,7 @@ import Seo from "../components/seo"
 const OfficialTmog = () => {
   return (
     <Layout>
-      <Seo />
+      <Seo customTitle={'Official tmog | The Scarlet Scourge'} />
       <InnerHero title="Official transmog" />
       <TmogSection />
     </Layout>
