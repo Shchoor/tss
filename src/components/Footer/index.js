@@ -236,7 +236,7 @@ const Index = () => {
 
         <Row>
           <Col md={12}>
-            <Rights>©{new Date().getFullYear()} ALL RIGHTS RESERVED</Rights>
+            <Rights>©{new Date().getFullYear()} ALL RIGHTS RESERVED | MADE BY <a className="link-red" href="mailto:vlad.polovyi@gmail.com">vlad.polovyi@gmail.com</a></Rights>
           </Col>
         </Row>
       </Container>
